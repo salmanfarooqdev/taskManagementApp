@@ -18,6 +18,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String FILENAME = "credentials";
@@ -144,12 +146,14 @@ public class MainActivity extends AppCompatActivity {
     private void init()
     {
 
+        Objects.requireNonNull(getSupportActionBar()).hide();
         SharedPreferences sPref = getSharedPreferences(FILENAME, MODE_PRIVATE);
         boolean flag = sPref.getBoolean("isLogin", false);
         if(flag)
         {
             startActivity(new Intent(MainActivity.this, Home.class));
             finish();
+
         }
 
         manager = getSupportFragmentManager();
