@@ -35,7 +35,7 @@ public class Home extends AppCompatActivity {
 
     private void init()
     {
-
+        getSupportActionBar().setTitle("To Do List");
     }
 
     @Override
@@ -50,6 +50,11 @@ public class Home extends AppCompatActivity {
 
         if (id == R.id.settingsItem) {
             Intent intent = new Intent(this, Setting.class);
+            startActivity(intent);
+            return true;
+
+        }else if (id == R.id.addItem) {
+            Intent intent = new Intent(this, AddTask.class);
             startActivity(intent);
             return true;
         }
