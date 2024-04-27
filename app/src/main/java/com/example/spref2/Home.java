@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,13 +20,15 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import java.util.ArrayList;
+
 public class Home extends AppCompatActivity implements TaskList.ItemSelected{
 
     ImageView settingIcon;
     TextView taskDisplay, tvTask, tvDesc, tvDue;
 
     CheckBox checkbox;
-
+    Button deleteBtn;
     Task task;
 
 
@@ -61,6 +64,37 @@ MyApplication application = (MyApplication) getApplicationContext();
                     .commit();
         }
 
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (task != null) {
+
+                        MyApplication.tasks.remove(task);
+
+                    ArrayList<Task> updatedTasks = MyApplication.tasks;
+
+                    // Update TaskList fragment
+                    TaskList taskListFragment = (TaskList) taskList;
+                    if (taskListFragment != null) {
+                        taskListFragment.updateAdapterData(updatedTasks);
+                    }
+
+                        Toast.makeText(Home.this, "Task deleted successfully!", Toast.LENGTH_SHORT).show();
+                        task = null;
+
+
+                        if (findViewById(R.id.layout_portrait) != null) {
+                            manager.beginTransaction()
+                                    .show(taskList)
+                                    .hide(taskDetail)
+                                    .commit();
+                        }
+                    } else {
+
+                        Toast.makeText(Home.this, "Error deleting task!", Toast.LENGTH_SHORT).show();
+                    }
+            }
+        });
 
 
     }
@@ -72,6 +106,8 @@ MyApplication application = (MyApplication) getApplicationContext();
 
         taskList = manager.findFragmentById(R.id.listfrag);
         taskDetail = manager.findFragmentById(R.id.detailfrag);
+        deleteBtn = findViewById(R.id.deleteBtn);
+
 
         assert taskDetail != null;
         v = taskDetail.requireView();

@@ -25,6 +25,10 @@ public class MyApplication extends Application {
         return instance;
     }
 
+    public int getTaskIndex(Task targetTask) {
+        return tasks.indexOf(targetTask);
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }

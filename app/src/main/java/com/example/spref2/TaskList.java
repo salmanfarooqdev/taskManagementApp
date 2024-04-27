@@ -8,11 +8,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,7 +30,9 @@ public class TaskList extends ListFragment {
 
     MyApplication application;
     ArrayList<Task> tasks;
+    ListView listView;
     ItemSelected myActivity;
+    ArrayAdapter<String> adapter;
     public TaskList() {
         // Required empty public constructor
     }
@@ -67,12 +71,30 @@ public class TaskList extends ListFragment {
         }
 
         if (!taskStrings.isEmpty()) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(),
+           adapter = new ArrayAdapter<>(requireActivity(),
                     android.R.layout.simple_dropdown_item_1line, taskStrings); // Use a standard layout
-            setListAdapter(adapter);  // Use setListAdapter to set the adapter for the ListView
+            setListAdapter(adapter);
+
+            Log.d("TaskList", "Adapter initialized. Task count: " + tasks.size());
+
         }
 
     }
+
+    public void updateAdapterData(ArrayList<Task> updatedTasks) {
+        adapter.clear();
+
+        // Add updated data
+        for (Task task : updatedTasks) {
+            StringBuilder taskStringBuilder = new StringBuilder();
+            taskStringBuilder.append(task.getTaskTitle()).append("\n");
+            adapter.add(taskStringBuilder.toString());
+        }
+
+        // Notify adapter of data change
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
