@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +18,11 @@ import androidx.core.view.WindowInsetsCompat;
 public class Home extends AppCompatActivity {
 
     ImageView settingIcon;
+    TextView taskDisplay;
 
 
+
+    MyApplication application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,10 @@ public class Home extends AppCompatActivity {
 
         init();
 
+//        MyApplication application = (MyApplication) getApplicationContext();
+//       String taskss =  application.getTasksAsString();
+//       taskDisplay.setText(taskss);
+
 
 
 
@@ -36,6 +44,7 @@ public class Home extends AppCompatActivity {
     private void init()
     {
         getSupportActionBar().setTitle("To Do List");
+
     }
 
     @Override
