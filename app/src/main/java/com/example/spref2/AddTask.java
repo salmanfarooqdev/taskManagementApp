@@ -1,6 +1,7 @@
 package com.example.spref2;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,10 +27,13 @@ import java.util.Calendar;
 public class AddTask extends AppCompatActivity {
 
 
+    TextInputEditText etTitle, etDesc;
     EditText dueDate;
     ImageButton dueDateBtn;
     Spinner dropdown;
     Button addTaskBtn;
+
+    MyApplication application;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +64,20 @@ public class AddTask extends AppCompatActivity {
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sel = dropdown.getSelectedItem().toString();
-                Toast.makeText(AddTask.this, sel, Toast.LENGTH_SHORT).show();
+                String title = etTitle.getText().toString().trim();
+                String desc = etDesc.getText().toString().trim();
+                String due = dueDate.getText().toString().trim();
+                int priority = Integer.parseInt( dropdown.getSelectedItem().toString());
+
+                Task task = new Task(title,desc, due, priority, false);
+                application.addTask(task);
+
+                etTitle.setText("");
+                etDesc.setText("");
+                dueDate.setText("");
+                Toast.makeText(AddTask.this, "Task Added Succesfully!", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(AddTask.this, Home.class));
             }
         });
 
@@ -81,6 +97,11 @@ public class AddTask extends AppCompatActivity {
         dropdown.setAdapter(adapter);
 
         addTaskBtn = findViewById(R.id.addTaskBtn);
+        etTitle = findViewById(R.id.etTitle);
+        etDesc = findViewById(R.id.etDesc);
+
+        application = (MyApplication) getApplicationContext();
+
 
     }
 

@@ -6,7 +6,7 @@ public class Task {
 
     String taskTitle;
     String taskDesc;
-    Date dueDate;
+    String dueDate;
     int priority;
     boolean isCompleted;
 
@@ -14,7 +14,7 @@ public class Task {
 
     }
 
-    public Task(String taskTitle, String taskDesc, Date dueDate, int priority, boolean isCompleted) {
+    public Task(String taskTitle, String taskDesc, String dueDate, int priority, boolean isCompleted) {
         this.taskTitle = taskTitle;
         this.taskDesc = taskDesc;
         this.dueDate = dueDate;
@@ -38,11 +38,11 @@ public class Task {
         this.taskDesc = taskDesc;
     }
 
-    public Date getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 
