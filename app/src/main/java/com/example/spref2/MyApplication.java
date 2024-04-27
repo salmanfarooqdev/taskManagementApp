@@ -14,8 +14,8 @@ public class MyApplication extends Application {
         tasks = new ArrayList<>();
         // Add some dummy tasks (replace with your actual data structure and values)
         tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
-        tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
-        tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
+        tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 2, false));
+        tasks.add(new Task("Take a walk", "eat smth idk", "2024-4-17", 1, true));
         tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
         tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
         tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
@@ -27,6 +27,14 @@ public class MyApplication extends Application {
 
     public ArrayList<Task> getTasks() {
         return tasks;
+    }
+
+    public Task getTaskByIndex(int index) {
+        if (index >= 0 && index < tasks.size()) {
+            return tasks.get(index);
+        } else {
+            return null; // Return null if index is out of bounds
+        }
     }
 
     public void addTask(Task task) {

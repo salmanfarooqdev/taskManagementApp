@@ -26,6 +26,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/tvTask"
             android:textSize="16dp"
             android:textColor= "@color/black"
             android:text="This is my first task " />
@@ -43,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:id="@+id/tvDesc"
                 android:textSize="16dp"
                 android:text="this is some descriptiom nahablja"
                 />
@@ -62,6 +64,7 @@
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 android:text="2014-13-2"
+                android:id="@+id/tvDue"
                 />
 
             <LinearLayout

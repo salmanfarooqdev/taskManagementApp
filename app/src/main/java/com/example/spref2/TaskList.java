@@ -21,8 +21,14 @@ import java.util.Objects;
 public class TaskList extends ListFragment {
 
 
+    public interface ItemSelected
+    {
+        public void onItemClicked(int index);
+    }
+
     MyApplication application;
     ArrayList<Task> tasks;
+    ItemSelected myActivity;
     public TaskList() {
         // Required empty public constructor
     }
@@ -30,11 +36,15 @@ public class TaskList extends ListFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+
+        myActivity = (ItemSelected) context;
     }
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+
+        myActivity.onItemClicked(position);
     }
 
     @Override

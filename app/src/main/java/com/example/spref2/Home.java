@@ -6,23 +6,33 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements TaskList.ItemSelected{
 
     ImageView settingIcon;
-    TextView taskDisplay;
+    TextView taskDisplay, tvTask, tvDesc, tvDue;
+
+    CheckBox checkbox;
+
+    Task task;
 
 
-
+    FragmentManager manager;
+    Fragment taskList, taskDetail;
     MyApplication application;
+    View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +42,24 @@ public class Home extends AppCompatActivity {
 
         init();
 
-//        MyApplication application = (MyApplication) getApplicationContext();
+MyApplication application = (MyApplication) getApplicationContext();
 //       String taskss =  application.getTasksAsString();
 //       taskDisplay.setText(taskss);
 
+        if(findViewById(R.id.layout_portrait) != null)
+        {
+            manager.beginTransaction()
+                    .show(taskList)
+                    .hide(taskDetail)
+                    .commit();
+        }
+        if(findViewById(R.id.layout_landscape) != null)
+        {
+            manager.beginTransaction()
+                    .show(taskList)
+                    .show(taskDetail)
+                    .commit();
+        }
 
 
 
@@ -44,6 +68,22 @@ public class Home extends AppCompatActivity {
     private void init()
     {
         getSupportActionBar().setTitle("To Do List");
+        manager = getSupportFragmentManager();
+
+        taskList = manager.findFragmentById(R.id.listfrag);
+        taskDetail = manager.findFragmentById(R.id.detailfrag);
+
+        assert taskDetail != null;
+        v = taskDetail.requireView();
+
+        MyApplication application = (MyApplication) getApplicationContext();
+
+
+        tvTask = v.findViewById(R.id.tvTask);
+        tvDesc = v.findViewById(R.id.tvDesc);
+        tvDue = v.findViewById(R.id.tvDue);
+        checkbox = v.findViewById(R.id.checkbox);
+
 
     }
 
@@ -69,5 +109,25 @@ public class Home extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClicked(int index) {
+
+        task = MyApplication.tasks.get(index);
+
+        tvTask.setText(task.getTaskTitle());
+        tvDesc.setText(task.getTaskDesc());
+        tvDue.setText(task.getDueDate());
+        checkbox.setChecked(task.isCompleted());
+
+        if(findViewById(R.id.layout_portrait) != null)
+        {
+            manager.beginTransaction()
+                    .hide(taskList)
+                    .show(taskDetail)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 }
