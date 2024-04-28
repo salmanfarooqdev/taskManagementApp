@@ -42,6 +42,20 @@ public class AddTask extends AppCompatActivity {
 
         init();
 
+        Intent intent = getIntent();
+        if (intent != null) {
+            String title = intent.getStringExtra("title");
+            String desc = intent.getStringExtra("desc");
+            String dueDat = intent.getStringExtra("due");
+            int priority = intent.getIntExtra("priority", 1); // Default priority if not found
+
+            // Pre-fill input fields with task data
+            etTitle.setText(title);
+            etDesc.setText(desc);
+            dueDate.setText(dueDat);
+
+        }
+
         dueDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -31,7 +31,7 @@ public class Home extends AppCompatActivity implements TaskList.ItemSelected, Ta
     TextView taskDisplay, tvTask, tvDesc, tvDue, tvPriority;
 
     CheckBox checkbox;
-    Button deleteBtn;
+    Button deleteBtn, updateBtn;
     Task task;
 
 
@@ -107,6 +107,22 @@ MyApplication application = (MyApplication) getApplicationContext();
                 }
             }
         });
+        
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(Home.this, AddTask.class);
+                i.putExtra("title", task.getTaskTitle());
+                i.putExtra("desc", task.getTaskDesc());
+                i.putExtra("due", task.getDueDate());
+                i.putExtra("priority", task.getPriority());
+
+                MyApplication.tasks.remove(task);
+                startActivity(i);
+                finish();
+            }
+        });
 
 
 
@@ -123,6 +139,7 @@ MyApplication application = (MyApplication) getApplicationContext();
         taskList = manager.findFragmentById(R.id.listfrag);
         taskDetail = manager.findFragmentById(R.id.detailfrag);
         deleteBtn = findViewById(R.id.deleteBtn);
+        updateBtn = findViewById(R.id.updateBtn);
 
 
         assert taskDetail != null;

@@ -119,7 +119,6 @@
                 android:backgroundTint="@color/bg"
                 android:layout_height="wrap_content"
                 android:text="Update Task"
-
                 android:id="@+id/updateBtn"
             />
 
