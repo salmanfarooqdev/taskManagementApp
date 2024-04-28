@@ -111,6 +111,8 @@ MyApplication application = (MyApplication) getApplicationContext();
 
 
 
+
+
     }
 
     private void init()

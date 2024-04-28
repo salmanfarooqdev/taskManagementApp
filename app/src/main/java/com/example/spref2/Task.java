@@ -31,11 +31,6 @@ public class Task implements Comparable<Task> {
         return this.timestamp.compareTo(otherTask.timestamp);
     }
 
-//    @Override
-//    public int compareTo(Task otherTask) {
-//        // Compare by priority
-//        return Integer.compare(this.priority, otherTask.priority);
-//    }
 
     public String getTaskTitle() {
         return taskTitle;

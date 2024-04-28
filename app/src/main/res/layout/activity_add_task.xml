@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:layout_margin="30dp"
+    android:background="@color/bgColor"
+    android:layout_margin="0dp"
+    android:padding="20dp"
     tools:context=".AddTask">
 
 
@@ -53,6 +55,7 @@
           android:layout_marginTop="20dp"
           android:layout_weight="2"
           android:id="@+id/etDate"
+          android:textSize="15dp"
           android:text="Enter Due Date"
           />
 
