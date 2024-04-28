@@ -67,6 +67,24 @@
                 android:id="@+id/tvDue"
                 />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="16dp"
+            android:textColor= "@color/black"
+            android:textStyle="bold"
+            android:text="Priority: " />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:text="1"
+            android:id="@+id/tvPriority"
+            />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
@@ -79,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
                     android:textColor= "@color/black"
-                    android:layout_marginRight="160dp"
+                    android:layout_marginRight="193dp"
                     android:textStyle="bold"
                     android:text="Task Completed? " />
 

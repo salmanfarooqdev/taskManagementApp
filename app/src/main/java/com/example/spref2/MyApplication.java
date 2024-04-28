@@ -3,6 +3,8 @@ package com.example.spref2;
 import android.app.Application;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MyApplication extends Application {
 
@@ -12,13 +14,12 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         tasks = new ArrayList<>();
-        // Add some dummy tasks (replace with your actual data structure and values)
-        tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
-        tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 2, false));
-        tasks.add(new Task("Take a walk", "eat smth idk", "2024-4-17", 1, true));
-        tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
-        tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
-        tasks.add(new Task("Grocery Shopping", "Pick up milk", "2024-4-17", 1, false));
+        tasks.add(new Task("Grocery Shopping1", "Pick up milk1", "2024-4-17", 1, true));
+        tasks.add(new Task("Buy Milk2", "Pick up milk2", "2024-4-17", 2, false));
+        tasks.add(new Task("Take a walk1", "eat smth idk1", "2024-4-17", 1, true));
+        tasks.add(new Task("Grocery Shopping3", "Pick up milk3", "2024-4-17", 3, false));
+        tasks.add(new Task("Study for a test4", "do laundary4", "2024-4-17", 4, true));
+        tasks.add(new Task("Pick up Stuff2", "go out and eat2", "2024-4-17", 2, false));
 
     }
     public static MyApplication getInstance() {
@@ -32,6 +33,7 @@ public class MyApplication extends Application {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
+
 
     public Task getTaskByIndex(int index) {
         if (index >= 0 && index < tasks.size()) {

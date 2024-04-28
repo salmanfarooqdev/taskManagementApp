@@ -11,8 +11,9 @@
   <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="REGISTRATION"
+      android:text="Sign Up"
       android:gravity="center"
+      android:textColor="@color/black"
       android:textSize="22sp"
       android:textStyle="bold"
       android:layout_marginBottom="30dp"
@@ -70,14 +71,7 @@
       android:orientation="horizontal"
       android:layout_margin="20dp"
       >
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:text="Cancel"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnCancel"
-        android:layout_marginRight="10dp"
-        />
+
     <Button
         android:layout_width="0dp"
         android:layout_weight="1"

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +22,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-public class Home extends AppCompatActivity implements TaskList.ItemSelected{
+public class Home extends AppCompatActivity implements TaskList.ItemSelected, TaskList.OnButtonClickListener{
 
     ImageView settingIcon;
-    TextView taskDisplay, tvTask, tvDesc, tvDue;
+    TextView taskDisplay, tvTask, tvDesc, tvDue, tvPriority;
 
     CheckBox checkbox;
     Button deleteBtn;
@@ -46,8 +49,7 @@ public class Home extends AppCompatActivity implements TaskList.ItemSelected{
         init();
 
 MyApplication application = (MyApplication) getApplicationContext();
-//       String taskss =  application.getTasksAsString();
-//       taskDisplay.setText(taskss);
+
 
         if(findViewById(R.id.layout_portrait) != null)
         {
@@ -80,7 +82,7 @@ MyApplication application = (MyApplication) getApplicationContext();
                     }
 
                         Toast.makeText(Home.this, "Task deleted successfully!", Toast.LENGTH_SHORT).show();
-                        task = null;
+                        //task = null;
 
 
                         if (findViewById(R.id.layout_portrait) != null) {
@@ -95,6 +97,18 @@ MyApplication application = (MyApplication) getApplicationContext();
                     }
             }
         });
+
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (task != null) {
+                    task.setCompleted(isChecked);
+                    Toast.makeText(Home.this, "Task completed: " + isChecked, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
 
 
     }
@@ -118,7 +132,18 @@ MyApplication application = (MyApplication) getApplicationContext();
         tvTask = v.findViewById(R.id.tvTask);
         tvDesc = v.findViewById(R.id.tvDesc);
         tvDue = v.findViewById(R.id.tvDue);
+        tvPriority = v.findViewById(R.id.tvPriority);
         checkbox = v.findViewById(R.id.checkbox);
+
+        if (!MyApplication.tasks.isEmpty()) {
+            task = MyApplication.tasks.get(0);
+            tvTask.setText(task.getTaskTitle());
+            tvDesc.setText(task.getTaskDesc());
+            tvDue.setText(task.getDueDate());
+            tvPriority.setText(String.valueOf(task.getPriority()));
+            checkbox.setChecked(task.isCompleted());
+        }
+
 
 
     }
@@ -150,11 +175,14 @@ MyApplication application = (MyApplication) getApplicationContext();
     @Override
     public void onItemClicked(int index) {
 
+        String message = "Clicked position: " + index;
+        Toast.makeText(Home.this, message, Toast.LENGTH_SHORT).show();
         task = MyApplication.tasks.get(index);
 
         tvTask.setText(task.getTaskTitle());
         tvDesc.setText(task.getTaskDesc());
         tvDue.setText(task.getDueDate());
+        tvPriority.setText(String.valueOf(task.getPriority()));
         checkbox.setChecked(task.isCompleted());
 
         if(findViewById(R.id.layout_portrait) != null)
@@ -165,5 +193,66 @@ MyApplication application = (MyApplication) getApplicationContext();
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    @Override
+    public void onAllButtonClick() {
+
+        if(task != null) {
+
+            Collections.sort(MyApplication.tasks);
+
+            // Update TaskList fragment with the sorted list of tasks
+            TaskList taskListFragment = (TaskList) taskList;
+            if (taskListFragment != null) {
+                taskListFragment.updateAdapterData(MyApplication.tasks);
+            }
+
+        }
+    }
+
+    @Override
+    public void onCompletedButtonClick() {
+
+        if(task != null) {
+
+            ArrayList<Task> completedTasks = new ArrayList<>();
+
+            // Filter completed tasks
+            for (Task task : MyApplication.tasks) {
+                if (task.isCompleted()) {
+                    completedTasks.add(task);
+                }
+            }
+
+            // Update TaskList fragment
+            TaskList taskListFragment = (TaskList) taskList;
+            if (taskListFragment != null) {
+                taskListFragment.updateAdapterData(completedTasks);
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onPriorityButtonClick() {
+
+        if(task != null) {
+            Collections.sort(MyApplication.tasks, new Comparator<Task>() {
+                @Override
+                public int compare(Task task1, Task task2) {
+                    return Integer.compare(task1.getPriority(), task2.getPriority());
+                }
+            });
+
+            // Update TaskList fragment with the sorted list of tasks
+            TaskList taskListFragment = (TaskList) taskList;
+            if (taskListFragment != null) {
+                taskListFragment.updateAdapterData(MyApplication.tasks);
+            }
+
+        }
+
     }
 }

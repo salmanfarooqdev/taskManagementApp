@@ -97,13 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnCancelS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                finish();
-            }
-        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,14 +167,12 @@ public class MainActivity extends AppCompatActivity {
         etPasswordS = signupView.findViewById(R.id.etPassword);
         etusernameS = signupView.findViewById(R.id.etUsername);
         btnSignup = signupView.findViewById(R.id.btnSignup);
-        btnCancelS = signupView.findViewById(R.id.btnCancel);
 
         // login hooks
 
         etPasswordL = loginView.findViewById(R.id.etPassword);
         etusernameL = loginView.findViewById(R.id.etUsername);
         btnLogin = loginView.findViewById(R.id.btnLogin);
-        btnCancelL = loginView.findViewById(R.id.btnCancel);
 
         manager.beginTransaction()
                 .hide(signupFrag)

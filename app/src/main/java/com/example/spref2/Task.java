@@ -2,13 +2,14 @@ package com.example.spref2;
 
 import java.util.Date;
 
-public class Task {
+public class Task implements Comparable<Task> {
 
     String taskTitle;
     String taskDesc;
     String dueDate;
     int priority;
     boolean isCompleted;
+    Date timestamp;
 
     public Task() {
 
@@ -20,7 +21,21 @@ public class Task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.isCompleted = isCompleted;
+        this.timestamp = new Date();
+
     }
+
+    @Override
+    public int compareTo(Task otherTask) {
+        // Compare by timestamp
+        return this.timestamp.compareTo(otherTask.timestamp);
+    }
+
+//    @Override
+//    public int compareTo(Task otherTask) {
+//        // Compare by priority
+//        return Integer.compare(this.priority, otherTask.priority);
+//    }
 
     public String getTaskTitle() {
         return taskTitle;
@@ -32,6 +47,14 @@ public class Task {
 
     public String getTaskDesc() {
         return taskDesc;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public void setTaskDesc(String taskDesc) {

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,20 +29,33 @@ public class TaskList extends ListFragment {
         public void onItemClicked(int index);
     }
 
+    public interface OnButtonClickListener {
+        void onAllButtonClick();
+        void onCompletedButtonClick();
+        void onPriorityButtonClick();
+    }
+
+    Button btnAll, btnCompleted, btnPriority;
+    OnButtonClickListener mListener;
     MyApplication application;
     ArrayList<Task> tasks;
     ListView listView;
     ItemSelected myActivity;
     ArrayAdapter<String> adapter;
     public TaskList() {
-        // Required empty public constructor
+
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         myActivity = (ItemSelected) context;
+
+        try {
+            mListener = (OnButtonClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnButtonClickListener");
+        }
     }
 
     @Override
@@ -56,10 +70,7 @@ public class TaskList extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
 
         tasks = new ArrayList<>();
-
         application = (MyApplication) requireActivity().getApplication();
-
-        // Retrieve tasks from the application instance (if existing)
         tasks.addAll(application.getTasks());
 
         ArrayList<String> taskStrings = new ArrayList<>();
@@ -72,7 +83,7 @@ public class TaskList extends ListFragment {
 
         if (!taskStrings.isEmpty()) {
            adapter = new ArrayAdapter<>(requireActivity(),
-                    android.R.layout.simple_dropdown_item_1line, taskStrings); // Use a standard layout
+                    android.R.layout.simple_dropdown_item_1line, taskStrings);
             setListAdapter(adapter);
 
             Log.d("TaskList", "Adapter initialized. Task count: " + tasks.size());
@@ -99,7 +110,38 @@ public class TaskList extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_list, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_task_list, container, false);
+
+        // Initialize buttons
+        btnAll = view.findViewById(R.id.btn_all);
+        btnCompleted = view.findViewById(R.id.btn_completed);
+        btnPriority = view.findViewById(R.id.btn_priority);
+
+        // Set click listeners for each button
+        btnAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onAllButtonClick();
+            }
+        });
+
+        btnCompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onCompletedButtonClick();
+            }
+        });
+
+        btnPriority.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onPriorityButtonClick();
+            }
+        });
+
+        return view;
+
+
     }
 }

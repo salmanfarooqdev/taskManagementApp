@@ -31,9 +31,6 @@ public class Setting extends AppCompatActivity {
            public void onClick(View v) {
                SharedPreferences sPref = getSharedPreferences(MainActivity.FILENAME, MODE_PRIVATE);
                SharedPreferences.Editor editor = sPref.edit();
-               //editor.clear();
-              // editor.remove("key_username");
-              // editor.remove("key_password");
                editor.putBoolean("isLogin", false);
                editor.apply();
 
